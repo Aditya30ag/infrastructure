@@ -12,6 +12,10 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  pages: write
+  contents: read
+
 jobs:
   check_style:
     runs-on: ubuntu-latest
@@ -49,7 +53,7 @@ jobs:
         with:
           name: files
           path: |
-            /home/runner/work/infrastructure/infrastructure/docs/_build/html/*
+            docs/_build/html
 
   deploy:
     needs: [check_style, build_docs]
@@ -75,6 +79,6 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.infra_automation }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: "/home/runner/files"
           force_orphan: true

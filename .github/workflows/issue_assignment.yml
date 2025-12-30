@@ -1,5 +1,8 @@
 name: Issue assignment
 
+permissions:
+  issues: write
+
 on:
   issues:
     types: [opened]
@@ -14,4 +17,4 @@ jobs:
         uses: pozil/auto-assign-issue@v2
         with:
           teams: infrastructure
-          repo-token: ${{ secrets.infra_automation }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
